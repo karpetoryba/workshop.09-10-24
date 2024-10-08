@@ -49,8 +49,6 @@ class Order {
 		$this->products = $products;
 		$this->customerName = $customerName;
 		$this->totalPrice = count($products) * Order::$UNIQUE_PRODUCT_PRICE;
-
-		echo "Commande {$this->id} créée, d'un montant de {$this->totalPrice} !</br></br>";
 	}
 
 
@@ -126,7 +124,6 @@ class Order {
 		}
 		$this->shippingMethod = $shippingMethod;
 		$this->status = Order::$SHIPPING_METHOD_SET_STATUS;
-
 	}
 
 
@@ -138,16 +135,6 @@ class Order {
 		$this->status = Order::$PAID_STATUS;
 	}
 }
-
-try {
-	$order = new Order('Nagui', ['g', 'stylo', 'trousse', 'ak-47']);
-} catch(Exception $error) {
-	echo $error->getMessage();
-}
-
-
-$order->removeProduct('g');
-
 
 
 
