@@ -3,12 +3,12 @@
 require_once '../model/Order.php';
 
 try {
-	$order = new Order('Jean Pierre', ['iphone', 'chaise']);
-	
-	echo "<html><body>Commande créée</body></html>";
+	$order = new Order('Jean Pierre', ['iphone', 'chaise', 'table', 'bureau', 'lampe']);
+
+	require_once '../view/order-created.php';
 
 } catch (Exception $e) {
 
-	echo "<html><body><p>" . $e->getMessage() . "</p></body></html>";
+	require_once '../view/order-error.php';
 }
 
