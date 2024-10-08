@@ -6,7 +6,14 @@ class Order {
 	public static $SHIPPING_ADDRESS_SET_STATUS = "SHIPPING_ADDRESS_SET";
 	public static $SHIPPING_METHOD_SET_STATUS = "SHIPPING_METHOD_SET";
 	public static $PAID_STATUS = "PAID";
+	public static $MAX_PRODUCTS_BY_ORDER = 5;
+	public static $BLACKLISTED_CUSTOMERS = ['David Robert'];
+	public static $UNIQUE_PRODUCT_PRICE = 5;
+	public static $AUTORIZED_SHIPPING_COUNTRIES = ['France', 'Belgique', 'Luxembourg'];
+	public static $AVAILABLE_SHIPPING_METHODS = ['Chronopost Express', 'Point relais', 'Domicile'];
+	public static $PAID_SHIPPING_METHOD = 'Chronopost Express';
 
+	public static $PAID_SHIPPING_METHODS_COST = 5;
 
 	private array $products;
 
@@ -29,12 +36,12 @@ class Order {
 
 	public function __construct(string $customerName, array $products) {
 
-		if (count($products) > 5) {
-			throw new Exception('Vous ne pouvez pas commander plus de 5 produits');
+		if (count($products) > Order::$MAX_PRODUCTS_BY_ORDER) {
+			throw new Exception("Vous ne pouvez pas commander plus de " . Order::$MAX_PRODUCTS_BY_ORDER . " produits");
 		}
 
-		if ($customerName === "David Robert") {
-			throw new Exception('Vous êtes blacklisté');
+		if (in_array($customerName, Order::$BLACKLISTED_CUSTOMERS)) {
+			throw new Exception("Vous êtes blacklisté");
 		}
 
 		$this->status = Order::$CART_STATUS;
@@ -42,7 +49,7 @@ class Order {
 		$this->id = rand();
 		$this->products = $products;
 		$this->customerName = $customerName;
-		$this->totalPrice = count($products) * 5;
+		$this->totalPrice = count($products) * Order::$UNIQUE_PRODUCT_PRICE;
 
 		echo "Commande {$this->id} créée, d'un montant de {$this->totalPrice} !</br></br>";
 	}
@@ -53,6 +60,9 @@ class Order {
 		if (($key = array_search($product, $this->products)) !== false) {
 			unset($this->products[$key]);
 		}
+
+		$this->totalPrice = count($this->products) * Order::$UNIQUE_PRODUCT_PRICE;
+
 
 		$productsAsString = implode(',', $this->products);
 
@@ -70,12 +80,12 @@ class Order {
 			throw new Exception('Vous ne pouvez plus ajouter de produits');
 		}
 
-		if (count($this->products) >= 5) {
-			throw new Exception('Vous ne pouvez pas commander plus de 5 produits');
+		if (count($this->products) >= Order::$MAX_PRODUCTS_BY_ORDER) {
+			throw new Exception('Vous ne pouvez pas commander plus de ' . Order::$MAX_PRODUCTS_BY_ORDER .' produits');
 		}
 
 		$this->products[] = $product;
-		$this->totalPrice = count($this->products) * 5;
+		$this->totalPrice = count($this->products) * Order::$UNIQUE_PRODUCT_PRICE;
 	}
 
 	public function setShippingAddress(string $shippingCity, string $shippingAddress, string $shippingCountry): void {
@@ -83,7 +93,7 @@ class Order {
 			throw new Exception(message: 'Vous ne pouvez plus modifier l\'adresse de livraison');
 		}
 
-		if (!in_array($shippingCountry, ['France', 'Belgique', "Luxembourg"])) {
+		if (!in_array($shippingCountry, Order::$AUTORIZED_SHIPPING_COUNTRIES)) {
 			throw new Exception(message: 'Vous ne pouvez pas commander dans ce pays');
 		}
 
@@ -98,12 +108,12 @@ class Order {
 			throw new Exception(message: 'Vous ne pouvez pas choisir de méthode avant d\'avoir renseigné votre adresse');
 		}
 
-		if (!in_array($shippingMethod, ['Chronopost Express', 'Point relais', 'Domicile'])) {
+		if (!in_array($shippingMethod, Order::$AVAILABLE_SHIPPING_METHODS)) {
 			throw new Exception(message: 'Méthode non valide');
 		}
 
-		if ($shippingMethod === 'Chronopost Express') {
-			$this->totalPrice = $this->totalPrice + 5;
+		if ($shippingMethod === Order::$PAID_SHIPPING_METHOD) {
+			$this->totalPrice = $this->totalPrice + Order::$PAID_SHIPPING_METHODS_COST;
 		}
 		$this->shippingMethod = $shippingMethod;
 		$this->status = Order::$SHIPPING_METHOD_SET_STATUS;
