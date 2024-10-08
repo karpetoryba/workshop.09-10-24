@@ -12,7 +12,6 @@ class Order {
 	public static $AUTORIZED_SHIPPING_COUNTRIES = ['France', 'Belgique', 'Luxembourg'];
 	public static $AVAILABLE_SHIPPING_METHODS = ['Chronopost Express', 'Point relais', 'Domicile'];
 	public static $PAID_SHIPPING_METHOD = 'Chronopost Express';
-
 	public static $PAID_SHIPPING_METHODS_COST = 5;
 
 	private array $products;
@@ -55,24 +54,30 @@ class Order {
 	}
 
 
-	public function removeProduct(string $product) {
 
+	private function calculateTotalCart():  float {
+		return count($this->products) * Order::$UNIQUE_PRODUCT_PRICE;
+	}
+
+
+	public function removeProduct(string $product) {
+		$this->removeProductFromList($product);
+		$this->totalPrice = $this->calculateTotalCart();
+
+		$productsAsString = implode(',', $this->products);
+		echo "Liste des produits : {$productsAsString}</br></br>";
+	}
+
+	private function removeProductFromList(string $product) {
 		if (($key = array_search($product, $this->products)) !== false) {
 			unset($this->products[$key]);
 		}
-
-		$this->totalPrice = count($this->products) * Order::$UNIQUE_PRODUCT_PRICE;
-
-
-		$productsAsString = implode(',', $this->products);
-
-		echo "Liste des produits : {$productsAsString}</br></br>";
-
 	}
+
 
 	public function addProduct(string $product): void {
 
-		if (in_array($product, $this->products)) {
+		if ($this->isProductInCart($product)) {
 			throw new Exception('Le produit existe déjà dans le panier');
 		}
 
@@ -85,7 +90,11 @@ class Order {
 		}
 
 		$this->products[] = $product;
-		$this->totalPrice = count($this->products) * Order::$UNIQUE_PRODUCT_PRICE;
+		$this->totalPrice = $this->calculateTotalCart();
+	}
+
+	private function isProductInCart(string $product): bool {
+		return in_array($product, $this->products);
 	}
 
 	public function setShippingAddress(string $shippingCity, string $shippingAddress, string $shippingCountry): void {
