@@ -4,7 +4,7 @@
 		<p>Payer la commande (c'est même pas débité sur votre compte. Ou peut être que si. Mais faites confiance) </p>
 
 
-		<form method="POST" action="../controller/process-payment.php">
+		<form method="POST" action="http://localhost:8888/esd-oop-php/process-payment">
 
 			<label for="payment"></label>
 

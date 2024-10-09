@@ -4,7 +4,7 @@
 		<p>Choisissez la méthode livraison : </p>
 
 
-		<form method="POST" action="../controller/process-shipping-method.php">
+		<form method="POST" action="http://localhost:8888/esd-oop-php/process-shipping-method.php">
 
 		<label for="shippingMethod">Méthode de livraison</label>
 
