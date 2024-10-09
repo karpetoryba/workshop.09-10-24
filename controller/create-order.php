@@ -6,7 +6,7 @@ session_start();
 
 try {
 
-	if (!isset($_POST['customerName']) || !isset($_POST['products'])) {
+	if (!isPostDataValid()) {
 		$errorMessage = "Merci de remplir les champs. J'ai pas fait tout ça pour rien.";
 		
 		require_once '../view/order-error.php';
@@ -18,11 +18,19 @@ try {
 
 	$order = new Order($customerName, $products);
 
-	$_SESSION['order'] = $order;
+	persistOrder($order);
 
 	require_once '../view/order-created.php';
 
 } catch (Exception $e) {
 	$errorMessage = $e->getMessage();
 	require_once '../view/order-error.php';
+}
+
+function isPostDataValid(): bool {
+	return isset($_POST['customerName']) && isset($_POST['products']);
+}
+
+function persistOrder(Order $order) {
+	$_SESSION['order'] = $order;
 }
