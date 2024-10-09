@@ -1,7 +1,7 @@
 <?php require_once('../view/partials/header.php'); ?>
 	
 	<main>
-		<p>La commande a été créée avec succès</p>
+		<p>L'adresse de livraison a bien été enregistrée</p>
 	</main>
 
 

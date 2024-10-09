@@ -1,17 +1,6 @@
-<!DOCTYPE html>
+<?php require_once('../view/partials/header.php'); ?>
+<main>
 
-<html>
-	<head>
-		<title>Le eshop au top</title>
-	</head>
-	<body>
-
-	<header>
-		<h1>Le Eshop au top</h1>
-	</header>
-	
-	<main>
-	
 		<form method="POST" action="../controller/create-order.php">
 
 			<label for="customerName">Nom du client</label>
@@ -36,5 +25,4 @@
 
 	</main>
 
-	</body>
-</html>
+<?php require_once('../view/partials/footer.php'); ?>
