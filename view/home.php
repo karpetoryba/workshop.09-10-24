@@ -1,7 +1,7 @@
 <?php require_once('./view/partials/header.php'); ?>
 <main>
 
-		<form method="POST" action="../controller/create-order.php">
+		<form method="POST" action="http://localhost:8888/esd-oop-php/create-order">
 
 			<label for="customerName">Nom du client</label>
 			<input type="text" id="customerName" name="customerName" required>

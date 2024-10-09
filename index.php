@@ -1,6 +1,7 @@
 <?php
 
-require_once('./controller/index.php');
+require_once('./controller/IndexController.php');
+require_once('./controller/CreateOrderController.php');
 
 // Récupère l'url actuelle et supprime le chemin de base
 // c'est à dire : http://localhost:8888/esd-oop-php/public/
@@ -13,8 +14,14 @@ $endUri = trim($endUri, '/');
 
 
 if($endUri === "") {
-
     $indexController = new IndexController();
     $indexController->index();
-
+    return;
 } 
+
+if($endUri === "create-order") {
+    $createOrderController = new CreateOrderController();
+    $createOrderController->createOrder();
+    return;
+} 
+
