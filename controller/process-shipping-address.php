@@ -11,9 +11,9 @@ if (isset($_SESSION['order'])) {
 
         $shippingCountry = $_POST['shippingCountry'];
         $shippingCity = $_POST['shippingCity'];
-        $shippingAdress = $_POST['shippingAdress'];
+        $shippingAddress = $_POST['shippingAddress'];
 
-        $order->setShippingAddress($shippingAdress, $shippingCity, $shippingCountry);
+        $order->setShippingAddress($shippingAddress, $shippingCity, $shippingCountry);
 
         $_SESSION['order'] = $order;
 

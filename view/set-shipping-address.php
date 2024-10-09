@@ -14,8 +14,8 @@
 			<input type="text" id="shippingCity" name="shippingCity" required pattern="^[a-zA-Z0-9\s.-]{5,50}$" title="La Ville doit contenir entre 5 et 50 caractères.">
 
 			<br>
-			<label for="shippingAdress">Adresse de livraison</label>
-			<input type="text" id="shippingAdress" name="shippingAdress" required pattern="^[a-zA-Z0-9\s.-]{5,50}$" title="L'adresse doit contenir entre 5 et 50 caractères et des espaces.">
+			<label for="shippingAddress">Adresse de livraison</label>
+			<input type="text" id="shippingAddress" name="shippingAddress" required pattern="^[a-zA-Z0-9\s.-]{5,50}$" title="L'adresse doit contenir entre 5 et 50 caractères et des espaces.">
 				
 			<button type="submit">Ajouter</button>
 
